@@ -12,10 +12,11 @@
             </div>
         </header>
 
-
         <div class="main">
             {{#if isUserLogged}}
-
+                <div class="user">
+                    {{getUser.username}} 🚪
+                </div>
                 {{> form }}
 
                 <div class="filter">
