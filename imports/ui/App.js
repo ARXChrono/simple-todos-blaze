@@ -4,7 +4,8 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 
 import './App.html';
 import './Task.js';
- 
+import "./Login.js";
+
 Template.mainContainer.onCreated(function mainContainerOnCreated() {
   this.state = new ReactiveDict();
 });
@@ -18,7 +19,13 @@ Template.mainContainer.events({
   }
 });
 
+const getUser = () => Meteor.user();
+const isUserLogged = () => !!getUser();
+
 Template.mainContainer.helpers({
+  isUserLogged() {
+    return isUserLogged();
+  },
   tasks() {
     const instance = Template.instance();
     const hideCompleted = instance.state.get(HIDE_COMPLETED_STRING);
