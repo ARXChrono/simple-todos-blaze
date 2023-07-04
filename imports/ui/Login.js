@@ -12,5 +12,5 @@ Template.login.events({
     const password = target.password.value;
 
     Meteor.loginWithPassword(username, password);
-  }
+  },
 });

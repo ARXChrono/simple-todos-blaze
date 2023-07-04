@@ -4,7 +4,6 @@ import { TasksCollection } from '../imports/db/TasksCollection';
 import '/imports/api/tasksMethods';
 import '/imports/api/tasksPublications';
 
-
 const insertTask = (taskText, user) =>
   TasksCollection.insert({
     text: taskText,
@@ -34,6 +33,6 @@ Meteor.startup(() => {
       'Fifth Task',
       'Sixth Task',
       'Seventh Task',
-    ].forEach(taskText => insertTask(taskText, user));
+    ].forEach((taskText) => insertTask(taskText, user));
   }
 });
