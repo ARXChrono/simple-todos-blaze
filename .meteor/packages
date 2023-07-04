@@ -24,3 +24,5 @@ hot-module-replacement@0.5.3  # Update code in development without reloading the
 blaze-hot               # Update files using Blaze's API with HMR
 reactive-dict           # To keep the state 
 accounts-password
+meteortesting:mocha
+quave:testing
