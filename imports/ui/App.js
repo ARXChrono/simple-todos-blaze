@@ -7,6 +7,7 @@ import './App.html';
 import './Task.js';
 import './Login.js';
 
+const IS_LOADING_STRING = 'isLoading';
 const HIDE_COMPLETED_STRING = 'hideCompleted';
 
 const getUser = () => Meteor.user();
@@ -26,6 +27,12 @@ const getTasksFilter = () => {
 
 Template.mainContainer.onCreated(function mainContainerOnCreated() {
   this.state = new ReactiveDict();
+
+  const handler = Meteor.subscribe('tasks');
+
+  Tracker.autorun(() => {
+    this.state.set(IS_LOADING_STRING, !handler.ready());
+  });
 });
 
 Template.mainContainer.events({
@@ -66,9 +73,8 @@ Template.mainContainer.helpers({
 
     const { pendingOnlyFilter } = getTasksFilter();
 
-    const incompleteTasksCount = TasksCollection.find(
-      pendingOnlyFilter
-    ).count();
+    const incompleteTasksCount =
+      TasksCollection.find(pendingOnlyFilter).count();
     return incompleteTasksCount ? `(${incompleteTasksCount})` : '';
   },
   isUserLogged() {
@@ -76,6 +82,10 @@ Template.mainContainer.helpers({
   },
   getUser() {
     return getUser();
+  },
+  isLoading() {
+    const instance = Template.instance();
+    return instance.state.get(IS_LOADING_STRING);
   },
 });
 
@@ -88,12 +98,10 @@ Template.form.events({
     const { target } = event;
     const text = target.text.value;
 
-    // Insert a task into the collection 
+    // Insert a task into the collection
     Meteor.call('tasks.insert', text);
 
     // Clear form
     target.text.value = '';
   },
-
-  
 });
